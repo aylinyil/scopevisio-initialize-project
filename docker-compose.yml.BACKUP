@@ -1,0 +1,61 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: mydb
+    entrypoint: [ "sql", "/init.sql" ]
+    ports:
+      - "55432:5432"
+
+  init-data:
+    image: ghcr.io/aylinyil/scope-service-initial-data:latest
+    depends_on:
+      - db
+    environment:
+      DB_NAME: mydb
+      DB_USER: postgres_user
+      DB_PASSWORD: postgres_password
+      DB_HOST: host.docker.internal
+      DB_PORT: 55432
+
+  static-data:
+    image: ghcr.io/aylinyil/scope-service-static-data:commit-feae221
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+
+  frontend:
+    image: ghcr.io/aylinyil/scope-service-frontend:latest
+    depends_on:
+      - db
+      - init-data
+      - static-data
+    ports:
+      - "8080:80"
+
+  service-1:
+    image: ghcr.io/aylinyil/scope-service-1:commit-5e9c2fe
+    depends_on:
+      - db
+      - init-data
+      - static-data
+    environment:
+      - spring.datasource.url=jdbc:postgresql://host.docker.internal:55432/mydb
+      - premium.service.url=http://host.docker.internal:8082
+
+    ports:
+      - "8083:8083"
+
+  service-2:
+    image: ghcr.io/aylinyil/scope-service-2:commit-74cd73d
+    depends_on:
+      - db
+      - init-data
+      - static-data
+    environment:
+      - spring.datasource.url=jdbc:postgresql://host.docker.internal:55432/mydb
+    ports:
+      - "8082:8082"
