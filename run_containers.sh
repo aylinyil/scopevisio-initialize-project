@@ -55,7 +55,7 @@ docker run --rm \
   -e DB_PASSWORD=postgres \
   -e DB_HOST=scope-db \
   -e DB_PORT=5432 \
-  ghcr.io/aylinyil/scope-service-set-initial-data:commit-c26bac582e9db3fc154e4d215883ce4b599be655 >> $LOGFILE 2>&1
+  ghcr.io/aylinyil/scopevisio-set-initial-data:commit-b9facd69efbf301edfa9841a87c9827fb15ee49d >> $LOGFILE 2>&1
 
 echo "[$(date)] Init-Container fertig ✅" | tee -a $LOGFILE
 
@@ -69,7 +69,7 @@ docker run -d \
   -p 8000:8000 \
   -e API_HOST=scope-service-1 \
   -e API_PORT=8083 \
-  ghcr.io/aylinyil/scope-service-frontend:commit-b1b39752299aa450bd1fb2d3cc9f0da4c2955556 >> $LOGFILE 2>&1
+  ghcr.io/aylinyil/scopevisio-frontend:commit-b7d3eaa6bc1b13ad8250de022f305c5bbbffab2d >> $LOGFILE 2>&1
 
 echo "[$(date)] Frontend gestartet ✅ http://localhost:8000" | tee -a $LOGFILE
 
@@ -81,7 +81,7 @@ docker run -d \
   --name scope-static-data \
   --network $NETWORK_NAME \
   -p 8080:8080 \
-  ghcr.io/aylinyil/scope-service-static-data:commit-cf835ef >> $LOGFILE 2>&1
+  ghcr.io/aylinyil/scopevisio-static-data:commit-2548bf5 >> $LOGFILE 2>&1
 
 echo "[$(date)] Static-Data gestartet ✅ http://localhost:8080" | tee -a $LOGFILE
 
@@ -95,7 +95,7 @@ docker run -d \
   -p 8083:8083 \
   -e SERVICE2_HOST=http://scope-service-2 \
   -e SERVICE2_PORT=8082 \
-  ghcr.io/aylinyil/scope-service-1:commit-0628028 >> $LOGFILE 2>&1
+  ghcr.io/aylinyil/scopevisio-service-1:commit-c8b2c35 >> $LOGFILE 2>&1
 
 echo "[$(date)] Scope-Service-1 gestartet ✅ http://localhost:8083" | tee -a $LOGFILE
 
@@ -107,6 +107,6 @@ docker run -d \
   --name scope-service-2 \
   --network $NETWORK_NAME \
   -p 8082:8082 \
-  ghcr.io/aylinyil/scope-service-2:commit-c7690f1 >> $LOGFILE 2>&1
+  ghcr.io/aylinyil/scopevisio-service-2:commit-525a2b0 >> $LOGFILE 2>&1
 
 echo "[$(date)] Scope-Service-2 gestartet ✅ http://localhost:8082" | tee -a $LOGFILE
