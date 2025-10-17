@@ -91,7 +91,7 @@ docker run -d `
   --name scope-static-data `
   --network $NetworkName `
   -p 8080:8080 `
-  ghcr.io/aylinyil/scopevisio-static-data:commit-bd517d1 >> $LogFile 2>&1
+  ghcr.io/aylinyil/scopevisio-static-data:commit-a0842ab >> $LogFile 2>&1
 
 Write-Log "Static-Data gestartet ✅ http://localhost:8080"
 
@@ -105,7 +105,7 @@ docker run -d `
   -p 8083:8083 `
   -e SERVICE2_HOST=http://scope-service-2 `
   -e SERVICE2_PORT=8082 `
-  ghcr.io/aylinyil/scopevisio-service-1:commit-bf688e2 >> $LogFile 2>&1
+  ghcr.io/aylinyil/scopevisio-service-1:commit-289cc44 >> $LogFile 2>&1
 
 Write-Log "Scope-Service-1 gestartet ✅ http://localhost:8083"
 
@@ -117,6 +117,6 @@ docker run -d `
   --name scope-service-2 `
   --network $NetworkName `
   -p 8082:8082 `
-  ghcr.io/aylinyil/scopevisio-service-2:commit-7d1fbf7 >> $LogFile 2>&1
+  ghcr.io/aylinyil/scopevisio-service-2:commit-26b69cc >> $LogFile 2>&1
 
 Write-Log "Scope-Service-2 gestartet ✅ http://localhost:8082"
